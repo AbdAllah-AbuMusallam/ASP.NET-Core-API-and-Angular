@@ -1,0 +1,48 @@
+import { Component, OnInit } from '@angular/core';
+import { User } from '../models/user';
+import { AccountService } from '../services/account.service';
+
+@Component({
+  selector: 'app-nav',
+  templateUrl: './nav.component.html',
+  styleUrls: ['./nav.component.css']
+})
+export class NavComponent implements OnInit {
+
+  model: any = {};
+  isLoggedIn: boolean = false;
+
+  constructor(private _accountService: AccountService) { }
+
+  ngOnInit() {
+    this.getCurrentUser();
+  }
+
+  login() {
+    this._accountService.login(this.model).subscribe({
+      next: () => {
+        this.isLoggedIn = true;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  logout() {
+    this._accountService.logout();
+    this.isLoggedIn = false;
+  }
+
+  getCurrentUser() {
+    this._accountService.currentUser$.subscribe({
+      next: (user: User | null) => {
+        this.isLoggedIn = !!user;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+}

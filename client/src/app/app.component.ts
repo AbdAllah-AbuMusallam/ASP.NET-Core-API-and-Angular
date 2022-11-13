@@ -1,34 +1,26 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { User } from './models/user';
+import { AccountService } from './services/account.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
+
   title = 'Dating App';
-  users: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private _accountService: AccountService) { }
+
+  ngOnInit() {
+    this.setCurrentUser();
   }
 
-  ngOnInit(): void {
-    this.getUsers();
-  }
-
-  getUsers() {
-    this.http.get('https://localhost:5001/api/users').subscribe({
-      next: (res) => {
-        this.users = res;
-      },
-      error: (err: HttpErrorResponse) => {
-        console.log(err.message);
-      },
-      complete: () => {
-        console.log('complete');
-      }
-    })
+  setCurrentUser() {
+    let user: User | null = null;
+    if (localStorage.getItem('user'))
+      user = JSON.parse(localStorage.getItem('user') || '{}');
+    this._accountService.setCurrentUser(user);
   }
 
 }

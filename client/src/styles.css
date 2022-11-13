@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+.main-body {
+    margin-top: 10vh;
+}
+
+.dropdown-toggle,
+.dropdown-item {
+    cursor: pointer;
+}
+
+.text-align-center {
+    text-align: center;
+}
