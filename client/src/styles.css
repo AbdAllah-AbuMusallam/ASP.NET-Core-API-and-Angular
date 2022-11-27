@@ -10,3 +10,11 @@
 .text-align-center {
     text-align: center;
 }
+
+.text-weight-bold {
+    font-weight: bold;
+}
+
+.bg-whitesmoke {
+    background-color: whitesmoke;
+}
